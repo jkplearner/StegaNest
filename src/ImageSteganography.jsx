@@ -1,6 +1,8 @@
 // ImageSteganography.jsx
 import React, { useRef, useState } from 'react';
 import CryptoJS from 'crypto-js';
+import './ImageSteganography.css';
+
 
 const ImageSteganography = () => {
   const [secretMessage, setSecretMessage] = useState('');
@@ -128,7 +130,7 @@ const ImageSteganography = () => {
         onChange={(e) => setSecretMessage(e.target.value)}
         placeholder="Enter your message"
       /><br />
-      <button onClick={hideMessage}>Hide Message</button><br />
+<button className="btn-action" onClick={hideMessage}>Hide Message</button>
       <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
       {outputImage && (
         <>
@@ -141,7 +143,7 @@ const ImageSteganography = () => {
 
       <h2>🔍 Reveal Message</h2>
       <input type="file" onChange={handleImageChange} accept="image/*" /><br />
-      <button onClick={revealMessage}>Reveal</button>
+<button className="btn-action" onClick={revealMessage}>Reveal</button>
       <p><strong>{revealedMessage}</strong></p>
     </div>
   );
