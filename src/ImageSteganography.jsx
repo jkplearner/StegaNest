@@ -1,8 +1,19 @@
-// ImageSteganography.jsx
 import React, { useRef, useState } from 'react';
 import CryptoJS from 'crypto-js';
 import './ImageSteganography.css';
+import LetterGlitch from './LetterGlitch';
 
+import { Button } from '@mui/material';
+import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+
+const VisuallyHiddenInput = ({ onChange }) => (
+  <input
+    type="file"
+    accept="image/*"
+    style={{ display: 'none' }}
+    onChange={onChange}
+  />
+);
 
 const ImageSteganography = () => {
   const [secretMessage, setSecretMessage] = useState('');
@@ -40,7 +51,7 @@ const ImageSteganography = () => {
         const pixels = imageData.data;
 
         const encrypted = CryptoJS.AES.encrypt(secretMessage, password).toString();
-        const message = encrypted + '¶'; // end symbol
+        const message = encrypted + '¶';
         const bits = message
           .split('')
           .map(char => char.charCodeAt(0).toString(2).padStart(8, '0'))
@@ -121,30 +132,54 @@ const ImageSteganography = () => {
   };
 
   return (
-    <div>
-      <h2>🔐 Hide Message</h2>
-      <input type="file" onChange={handleImageChange} accept="image/*" /><br />
-      <input
-        type="text"
-        value={secretMessage}
-        onChange={(e) => setSecretMessage(e.target.value)}
-        placeholder="Enter your message"
-      /><br />
-<button className="btn-action" onClick={hideMessage}>Hide Message</button>
-      <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
-      {outputImage && (
-        <>
-          <img src={outputImage} alt="Output" style={{ maxWidth: '300px' }} /><br />
-          <a href={outputImage} download="encoded.png">📥 Download</a>
-        </>
-      )}
+    <div style={{ position: 'relative', height: '100vh', width: '100vw', overflow: 'hidden' }}>
+      <LetterGlitch outerVignette={false} centerVignette={false} />
+      <div className="steg-container">
+        <h2>🔐 Hide Message</h2>
 
-      <hr />
+        <Button
+          component="label"
+          variant="contained"
+          startIcon={<CloudUploadIcon />}
+          sx={{ mb: 2 }}
+        >
+          Upload Image
+          <VisuallyHiddenInput onChange={handleImageChange} />
+        </Button><br />
 
-      <h2>🔍 Reveal Message</h2>
-      <input type="file" onChange={handleImageChange} accept="image/*" /><br />
-<button className="btn-action" onClick={revealMessage}>Reveal</button>
-      <p><strong>{revealedMessage}</strong></p>
+        <input
+          type="text"
+          value={secretMessage}
+          onChange={(e) => setSecretMessage(e.target.value)}
+          placeholder="Enter your message"
+        /><br />
+
+        <button className="btn-action" onClick={hideMessage}>Hide Message</button>
+        <canvas ref={canvasRef} style={{ display: 'none' }}></canvas>
+
+        {outputImage && (
+          <>
+            <a href={outputImage} download="encoded.png">📥 Download</a>
+          </>
+        )}
+
+        <hr />
+
+        <h2>🔍 Reveal Message</h2>
+
+        <Button
+          component="label"
+          variant="contained"
+          startIcon={<CloudUploadIcon />}
+          sx={{ mb: 2 }}
+        >
+          Upload Image
+          <VisuallyHiddenInput onChange={handleImageChange} />
+        </Button><br />
+
+        <button className="btn-action" onClick={revealMessage}>Reveal</button>
+        <p><strong>{revealedMessage}</strong></p>
+      </div>
     </div>
   );
 };
