@@ -31,9 +31,9 @@ A secure image steganography app built with the MERN stack that lets you hide en
 
 | Name                         | GitHub                          | Role                        |
 |------------------------------|--------------------------------|-----------------------------|
-| Jaya Krishna Pavan Mummaneni | [@jkplearner](https://github.com/jkplearner) | 🔧 Backend, Encryption Logic |
+| Jaya Krishna Pavan Mummaneni | [@jkplearner](https://github.com/jkplearner) | 🔧 Backend, File handling |
 | Srineela Reddy M         | [@srinime1806](https://github.com/srinime1806) | 🎨 Frontend & UI Design     |
-
+| Jaswanth sai chowdary karanam    | [@jashhh46](https://github.com/jashhh46) | 🔧 Backend, Encryption Logic|
 
 ---
 
